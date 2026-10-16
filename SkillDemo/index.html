@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="使用 Game.SkillFlow JavaScript 驱动技能流程与 Three.js 特效的可运行示例。"
+    />
+    <title>技能流程演示 · 蓄力地面冲击</title>
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">GAME.SKILLFLOW · INTERACTIVE SAMPLE</p>
+          <h1 id="skill-name">蓄力地面冲击</h1>
+          <p class="intro">
+            由 SkillFlow 推进技能逻辑，以固定步长同步播放独立实现的 Three.js 视觉效果。
+          </p>
+        </div>
+        <div class="version-chip">
+          <span class="status-dot"></span>
+          <span>固定步长 · 60 Hz</span>
+        </div>
+      </header>
+
+      <section class="demo-layout" aria-label="技能演示">
+        <div class="stage-card">
+          <div class="stage-heading">
+            <div>
+              <p class="eyebrow">VISUAL PREVIEW</p>
+              <h2 id="visual-title">地面冲击场景</h2>
+            </div>
+            <span class="stage-hint">拖动旋转 · 滚轮/双指缩放</span>
+          </div>
+          <div class="stage">
+            <canvas id="visual-canvas" aria-label="蓄力地面冲击的 Three.js 视觉效果"></canvas>
+            <div class="stage-caption">
+              <span class="caption-mark"></span>
+              <span id="visual-caption">CHARGED GROUND IMPACT</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="control-card" aria-label="技能控制">
+          <div class="control-heading">
+            <div>
+              <p id="template-id" class="eyebrow">SKILL TEMPLATE</p>
+              <h2>技能状态</h2>
+            </div>
+            <span id="status-badge" class="status-badge" data-state="ready">待机</span>
+          </div>
+
+          <div class="template-picker">
+            <label for="skill-select">选择技能模板</label>
+            <select id="skill-select"></select>
+          </div>
+
+          <div class="status-panel" aria-live="polite">
+            <span class="status-label">当前阶段</span>
+            <strong id="phase-label">准备就绪</strong>
+            <p id="skill-description">流程由代码构造，动画仅作视觉呈现。</p>
+            <p id="status-detail"></p>
+          </div>
+
+          <div class="progress-track" aria-hidden="true">
+            <span id="progress-fill"></span>
+          </div>
+
+          <div class="controls">
+            <button id="play-button" class="button button-primary" type="button">
+              施放技能
+            </button>
+            <button id="cancel-button" class="button button-secondary" type="button" disabled>
+              中断
+            </button>
+            <button id="event-button" class="button button-event" type="button" hidden>
+              模拟敌人来袭
+            </button>
+            <button id="replay-button" class="button button-quiet" type="button" disabled>
+              重新施放
+            </button>
+          </div>
+
+          <div class="flow-summary">
+            <p class="eyebrow">FLOW</p>
+            <ol id="flow-steps"></ol>
+          </div>
+
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+        </aside>
+      </section>
+
+      <footer class="page-footer">
+        <span>SkillFlow 控制流程 · Three.js 独立实现视觉</span>
+        <span>VFXTweens 仅作表现参考</span>
+      </footer>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
