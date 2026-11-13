@@ -26,6 +26,14 @@
       </header>
 
       <section class="demo-layout" aria-label="技能演示">
+        <aside class="template-picker" aria-label="技能模板">
+          <div class="template-picker-heading">
+            <p class="eyebrow">SKILL LIBRARY</p>
+            <h2>技能模板</h2>
+          </div>
+          <div id="skill-list" class="skill-list" aria-label="选择技能模板"></div>
+        </aside>
+
         <div class="stage-card">
           <div class="stage-heading">
             <div>
@@ -50,11 +58,6 @@
               <h2>技能状态</h2>
             </div>
             <span id="status-badge" class="status-badge" data-state="ready">待机</span>
-          </div>
-
-          <div class="template-picker">
-            <label for="skill-select">选择技能模板</label>
-            <select id="skill-select"></select>
           </div>
 
           <div class="status-panel" aria-live="polite">

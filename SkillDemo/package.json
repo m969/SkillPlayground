@@ -4,15 +4,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
     "build": "vite build",
-    "test": "node --test"
+    "test": "node --test",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:exe": "tauri build --no-bundle",
+    "tauri:build": "tauri build",
+    "tauri:shortcut": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/create-shortcut.ps1"
   },
   "dependencies": {
     "@m969/game-skillflow": "file:../SkillFlow/Game.SkillFlow.JavaScript",
     "three": "^0.180.0"
   },
   "devDependencies": {
+    "@tauri-apps/cli": "^2.8.4",
     "vite": "^7.1.12"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

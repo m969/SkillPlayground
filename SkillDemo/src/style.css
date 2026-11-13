@@ -114,10 +114,11 @@ h2 {
 
 .demo-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.62fr) minmax(290px, 0.78fr);
+  grid-template-columns: minmax(190px, 0.58fr) minmax(0, 1.62fr) minmax(290px, 0.78fr);
   gap: 18px;
 }
 
+.template-picker,
 .stage-card,
 .control-card {
   overflow: hidden;
@@ -125,6 +126,71 @@ h2 {
   border-radius: 18px;
   background: var(--panel);
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+}
+
+.template-picker {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  padding: 18px 12px 14px 18px;
+}
+
+.template-picker-heading {
+  margin-bottom: 14px;
+}
+
+.template-picker-heading .eyebrow {
+  margin-bottom: 5px;
+}
+
+.skill-list {
+  display: grid;
+  max-height: min(560px, calc(100vh - 300px));
+  min-height: 180px;
+  align-content: start;
+  gap: 7px;
+  overflow-y: auto;
+  padding-right: 6px;
+  scrollbar-color: rgba(130, 164, 184, 0.35) transparent;
+  scrollbar-width: thin;
+}
+
+.skill-option {
+  width: 100%;
+  min-height: 41px;
+  padding: 9px 10px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  color: #a8b8c3;
+  background: rgba(5, 11, 18, 0.35);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.5;
+  text-align: left;
+  transition: background 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.skill-option:hover:not(:disabled) {
+  border-color: rgba(145, 177, 195, 0.2);
+  color: #e7f0f5;
+  background: rgba(103, 232, 255, 0.06);
+}
+
+.skill-option[aria-pressed="true"] {
+  border-color: rgba(103, 232, 255, 0.3);
+  color: var(--cyan);
+  background: rgba(103, 232, 255, 0.09);
+}
+
+.skill-option:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.skill-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .stage-heading {
@@ -214,33 +280,6 @@ h2 {
 .status-badge[data-state="failure"] {
   border-color: rgba(255, 139, 115, 0.25);
   color: #ff9b83;
-}
-
-.template-picker {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.template-picker label {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.template-picker select {
-  width: 100%;
-  min-height: 42px;
-  padding: 0 12px;
-  border: 1px solid var(--line);
-  border-radius: 9px;
-  color: #e7f0f5;
-  background: #111c29;
-  font: inherit;
-  font-size: 12px;
-}
-
-.template-picker select:disabled {
-  opacity: 0.55;
 }
 
 .status-panel {
@@ -414,6 +453,22 @@ h2 {
     grid-template-columns: 1fr;
   }
 
+  .template-picker,
+  .stage-card,
+  .control-card {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .template-picker {
+    max-height: 290px;
+  }
+
+  .skill-list {
+    max-height: 190px;
+    min-height: 0;
+  }
+
   .stage {
     height: min(62vw, 510px);
     min-height: 340px;
@@ -426,7 +481,6 @@ h2 {
   }
 
   .control-heading,
-  .template-picker,
   .status-panel,
   .progress-track,
   .controls,

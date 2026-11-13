@@ -70,12 +70,26 @@ function startDemo() {
   grid.position.y = -0.02;
   scene.add(grid);
 
-  const skillSelect = requireElement("#skill-select");
+  const skillList = requireElement("#skill-list");
+  const skillButtons = new Map();
   for (const template of skillCatalog) {
-    const option = document.createElement("option");
-    option.value = template.id;
-    option.textContent = template.name;
-    skillSelect.append(option);
+    const button = document.createElement("button");
+    button.className = "skill-option";
+    button.type = "button";
+    button.textContent = template.name;
+    button.setAttribute("aria-pressed", "false");
+    button.addEventListener("click", () => {
+      try {
+        clearError();
+        runtime.selectTemplate(template);
+        updateTemplateInfo();
+        updateInterface();
+      } catch (error) {
+        displayError(error);
+      }
+    });
+    skillList.append(button);
+    skillButtons.set(template.id, button);
   }
 
   const runtime = new SkillDemoRuntime(scene, skillCatalog[0]);
@@ -122,7 +136,9 @@ function startDemo() {
     canvas.setAttribute("aria-label", `${template.name}的 Three.js 视觉效果`);
     visualCaption.textContent = template.id.replaceAll("-", " ").toUpperCase();
     skillDescription.textContent = template.description;
-    skillSelect.value = template.id;
+    for (const [templateIdValue, button] of skillButtons) {
+      button.setAttribute("aria-pressed", String(templateIdValue === template.id));
+    }
     eventButton.hidden = template.eventKey === null;
     eventButton.textContent = template.eventButtonLabel;
     flowSteps.replaceChildren(
@@ -147,23 +163,10 @@ function startDemo() {
     cancelButton.disabled = !isRunning;
     eventButton.disabled = !runtime.canTriggerEvent;
     replayButton.disabled = runtime.status === SkillDemoStatus.Ready || isRunning;
-    skillSelect.disabled = isRunning;
-  }
-
-  skillSelect.addEventListener("change", () => {
-    try {
-      clearError();
-      const template = skillCatalog.find((entry) => entry.id === skillSelect.value);
-      if (!template) {
-        throw new Error(`找不到技能模板：${skillSelect.value}`);
-      }
-      runtime.selectTemplate(template);
-      updateTemplateInfo();
-      updateInterface();
-    } catch (error) {
-      displayError(error);
+    for (const button of skillButtons.values()) {
+      button.disabled = isRunning;
     }
-  });
+  }
 
   playButton.addEventListener("click", () => {
     try {

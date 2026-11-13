@@ -1,6 +1,6 @@
 # SkillFlow 技能示例 Demo
 
-独立的浏览器示例应用，使用 JavaScript 版 Game.SkillFlow 驱动代码定义的技能流程，并由 Demo 自己的 Three.js 场景播放视觉效果。VFXTweens 仅用于参考视觉表现，不作为依赖；Demo 不导入它的 runtime，也不加载它的特效 JSON。
+可通过浏览器运行或使用 Tauri 2 打包为独立桌面应用，使用 JavaScript 版 Game.SkillFlow 驱动代码定义的技能流程，并由 Demo 自己的 Three.js 场景播放视觉效果。VFXTweens 仅用于参考视觉表现，不作为依赖；Demo 不导入它的 runtime，也不加载它的特效 JSON。
 
 目前包含十三个技能模板：
 
@@ -33,6 +33,37 @@
 npm install
 npm run dev
 ```
+
+## 桌面版
+
+SkillDemo 可通过 Tauri 2 以独立桌面窗口运行。首次运行前安装 Rust 工具链及 Windows WebView2 Runtime，然后在本目录执行：
+
+```sh
+npm install
+npm run tauri:dev
+```
+
+构建桌面应用及安装包：
+
+```sh
+npm run tauri:build
+```
+
+只构建发布版 EXE（不生成安装包）：
+
+```sh
+npm run tauri:exe
+```
+
+EXE 输出到 `src-tauri/target/release/skill_demo.exe`。构建后可创建当前 Windows 用户桌面快捷方式：
+
+```sh
+npm run tauri:shortcut
+```
+
+快捷方式为 `SkillFlow Demo.lnk`，指向上述发布版 EXE；若 EXE 不存在，脚本会提示先构建。
+
+桌面版和浏览器版共用相同的页面、技能流程与 Three.js 视觉实现。
 
 页面以 `1/60` 秒固定步长推进 SkillFlow 与视觉模拟。切换到后台时暂停并清空时间累积，返回页面后继续；单帧最多补进 8 个步长，剩余时间在后续帧继续处理。
 
