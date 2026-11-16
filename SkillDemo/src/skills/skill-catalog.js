@@ -4,6 +4,12 @@ import { CounterSlashVisual } from "../visuals/counter-slash-visual.js";
 import { DashStrikeVisual } from "../visuals/dash-strike-visual.js";
 import { GuardianShieldVisual } from "../visuals/guardian-shield-visual.js";
 import { HealingPulseVisual } from "../visuals/healing-pulse-visual.js";
+import {
+  DashSlashVisual,
+  HeavyVerticalCleaveVisual,
+  HorizontalLightSlashVisual,
+  WhirlwindComboSlashVisual
+} from "../visuals/melee-slash-visuals.js";
 import { IceShardVisual } from "../visuals/ice-shard-visual.js";
 import { ProjectileShotVisual } from "../visuals/projectile-shot-visual.js";
 import { SkyfallProjectileVisual } from "../visuals/skyfall-projectile-visual.js";
@@ -258,6 +264,90 @@ const dashStrike = Object.freeze({
   }
 });
 
+const horizontalLightSlash = Object.freeze({
+  id: "horizontal-light-slash",
+  skillId: 1014,
+  name: "横向轻斩",
+  subtitle: "迅速挥出两道轻盈弧光",
+  description: "短暂起手后交错挥出两道明亮刀光；视觉收束后技能完成。",
+  eventKey: null,
+  eventButtonLabel: "",
+  initialPhase: "准备挥斩",
+  flowSteps: ["快速起手", "横向弧光掠过", "刀光收束"],
+  visualFactories: Object.freeze({
+    "play-horizontal-light-slash": (scene) => new HorizontalLightSlashVisual(scene)
+  }),
+  createRoot() {
+    return SkillFlowNodes.Sequence(
+      SkillFlowNodes.Delay(0.06),
+      SkillFlowNodes.Action("play-horizontal-light-slash")
+    );
+  }
+});
+
+const heavyVerticalCleave = Object.freeze({
+  id: "heavy-vertical-cleave",
+  skillId: 1015,
+  name: "竖向重劈",
+  subtitle: "蓄势后重劈并震开地面",
+  description: "蓄势后向下重劈，刀光落地时扩散冲击波；视觉结束后技能完成。",
+  eventKey: null,
+  eventButtonLabel: "",
+  initialPhase: "蓄势重劈",
+  flowSteps: ["抬刀蓄势", "向下重劈", "地面冲击波消散"],
+  visualFactories: Object.freeze({
+    "play-heavy-vertical-cleave": (scene) => new HeavyVerticalCleaveVisual(scene)
+  }),
+  createRoot() {
+    return SkillFlowNodes.Sequence(
+      SkillFlowNodes.Delay(0.18),
+      SkillFlowNodes.Action("play-heavy-vertical-cleave")
+    );
+  }
+});
+
+const whirlwindComboSlash = Object.freeze({
+  id: "whirlwind-combo-slash",
+  skillId: 1016,
+  name: "旋风多段斩",
+  subtitle: "三段刀光交错旋斩",
+  description: "连续释放三段旋转弧光并扫过地面；等待全部刀光消散后完成。",
+  eventKey: null,
+  eventButtonLabel: "",
+  initialPhase: "旋身连斩",
+  flowSteps: ["第一段起斩", "第二段回旋斩", "第三段扫地终结"],
+  visualFactories: Object.freeze({
+    "play-whirlwind-combo-slash": (scene) => new WhirlwindComboSlashVisual(scene)
+  }),
+  createRoot() {
+    return SkillFlowNodes.Sequence(
+      SkillFlowNodes.Delay(0.1),
+      SkillFlowNodes.Action("play-whirlwind-combo-slash")
+    );
+  }
+});
+
+const dashSlash = Object.freeze({
+  id: "dash-slash",
+  skillId: 1017,
+  name: "突进斩",
+  subtitle: "突进穿越并在终点斩击",
+  description: "沿战场斜线快速突进，抵达终点时追加刀光与冲击波。",
+  eventKey: null,
+  eventButtonLabel: "",
+  initialPhase: "锁定突进目标",
+  flowSteps: ["锁定斩击方向", "突进并挥斩", "终点冲击消散"],
+  visualFactories: Object.freeze({
+    "play-dash-slash": (scene) => new DashSlashVisual(scene)
+  }),
+  createRoot() {
+    return SkillFlowNodes.Sequence(
+      SkillFlowNodes.Delay(0.08),
+      SkillFlowNodes.Action("play-dash-slash")
+    );
+  }
+});
+
 const guardianShield = Object.freeze({
   id: "guardian-shield",
   skillId: 1007,
@@ -496,6 +586,10 @@ export const skillCatalog = Object.freeze([
   iceShardVolley,
   healingPulse,
   dashStrike,
+  horizontalLightSlash,
+  heavyVerticalCleave,
+  whirlwindComboSlash,
+  dashSlash,
   guardianShield,
   starfallFinisher,
   interruptibleChannel,
